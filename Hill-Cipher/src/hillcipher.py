@@ -90,33 +90,87 @@ def find_key_hill(plaintext, ciphertext, m):
     return K.astype(int).tolist()
 
 # ==========================================
-# CONTOH PENGGUNAAN (TESTING PROGRAM)
+# PROGRAM UTAMA (MENU INTERAKTIF)
 # ==========================================
+def input_matriks_kunci():
+    """Meminta ukuran matriks dan isi matriks kunci dari input pengguna."""
+    while True:
+        try:
+            n = int(input("Masukkan ukuran matriks kunci (n untuk n x n): ").strip())
+            if n <= 0:
+                print("Ukuran matriks harus lebih dari 0.")
+                continue
+            break
+        except ValueError:
+            print("Masukkan angka bulat yang valid.")
+
+    matrix = []
+    print(f"Masukkan {n} baris, tiap baris berisi {n} angka dipisahkan spasi.")
+    for i in range(n):
+        while True:
+            baris_input = input(f"Baris ke-{i + 1}: ").strip()
+            try:
+                baris = [int(x) for x in baris_input.split()]
+                if len(baris) != n:
+                    print(f"Jumlah angka harus {n}, coba lagi.")
+                    continue
+                matrix.append(baris)
+                break
+            except ValueError:
+                print("Masukkan hanya angka bulat yang dipisahkan spasi.")
+
+    return matrix
+
+
+def tampilkan_menu():
+    print("\n=== HILL CIPHER ===")
+    print("1. Enkripsi")
+    print("2. Dekripsi")
+    print("3. Cari Kunci (dari Plaintext & Ciphertext)")
+    print("4. Keluar")
+
+
+def main():
+    while True:
+        tampilkan_menu()
+        pilihan = input("Pilih menu (1/2/3/4): ").strip()
+
+        if pilihan == "1":
+            plaintext = input("Masukkan plaintext : ")
+            key = input_matriks_kunci()
+            try:
+                ciphertext = encrypt_hill(plaintext, key)
+                print(f"\nHasil Enkripsi (Ciphertext) : {ciphertext}")
+            except Exception as e:
+                print(f"\nGagal enkripsi: {e}")
+
+        elif pilihan == "2":
+            ciphertext = input("Masukkan ciphertext : ")
+            key = input_matriks_kunci()
+            try:
+                plaintext = decrypt_hill(ciphertext, key)
+                print(f"\nHasil Dekripsi (Plaintext)  : {plaintext}")
+            except Exception as e:
+                print(f"\nGagal dekripsi: {e}")
+
+        elif pilihan == "3":
+            plaintext = input("Masukkan plaintext  : ")
+            ciphertext = input("Masukkan ciphertext : ")
+            try:
+                m = int(input("Masukkan ukuran matriks kunci (n untuk n x n): ").strip())
+                kunci_ditemukan = find_key_hill(plaintext, ciphertext, m=m)
+                print(f"\nKunci yang ditemukan:")
+                print(np.array(kunci_ditemukan))
+            except ValueError as e:
+                print(f"\nGagal mencari kunci: {e}")
+
+        elif pilihan == "4":
+            print("Keluar dari program. Sampai jumpa!")
+            break
+
+        else:
+            print("Pilihan tidak valid, silakan coba lagi.")
+
+
 if __name__ == "__main__":
-    # Matriks kunci 2x2
-    key = [
-        [3, 3],
-        [2, 5]
-    ]
-    pesan_asli = "HELP"
-    ukuran_kunci = len(key)
-
-    print("=== HILL CIPHER PYTHON ===")
-    print(f"Kunci (K):\n{np.array(key)}")
-    print(f"Pesan Asli   : {pesan_asli}\n")
-
-    # 1. ENKRIPSI
-    teks_sandi = encrypt_hill(pesan_asli, key)
-    print(f"[1] Hasil Enkripsi (Ciphertext) : {teks_sandi}")
-
-    # 2. DEKRIPSI
-    teks_kembali = decrypt_hill(teks_sandi, key)
-    print(f"[2] Hasil Dekripsi (Plaintext)  : {teks_kembali}")
-
-    # 3. MENCARI KUNCI
-    try:
-        kunci_ditemukan = find_key_hill(pesan_asli, teks_sandi, m=ukuran_kunci)
-        print(f"[3] Kunci yang ditemukan dari ('{pesan_asli}' & '{teks_sandi}'):")
-        print(np.array(kunci_ditemukan))
-    except ValueError as e:
-        print(f"[3] Gagal mencari kunci: {e}")
+    main()

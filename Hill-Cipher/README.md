@@ -8,6 +8,7 @@ Repositori/Program ini berisi implementasi algoritma kriptografi klasik **Hill C
 2. **Dekripsi**: Mengembalikan *ciphertext* menjadi *plaintext* asli menggunakan invers matriks kunci modulo 26.
 3. **Mencari Kunci (Find Key)**: Menemukan matriks kunci yang digunakan berdasarkan pasangan *plaintext* dan *ciphertext* yang diketahui (memerlukan matriks *plaintext* yang *invertible* modulo 26).
 4. **Auto-Padding**: Otomatis menambahkan karakter 'X' di akhir teks jika panjang teks tidak sesuai dengan ukuran matriks (bukan kelipatan `n`).
+5. **Menu Interaktif**: Semua input (teks, kunci/matriks) dimasukkan langsung oleh pengguna lewat terminal — tidak ada nilai yang di-*hardcode* di dalam kode program.
 
 ## 🛠️ Persyaratan (Requirements)
 
@@ -26,54 +27,31 @@ pip install numpy sympy
 
 ## 🚀 Cara Penggunaan
 
-1. Simpan kode Python di atas ke dalam sebuah file, misalnya `hill_cipher.py`.
-2. Buka terminal atau command prompt, lalu arahkan ke direktori tempat file disimpan.
-3. Jalankan file dengan perintah:
+1. Buka terminal atau command prompt, lalu arahkan ke direktori `src`.
+2. Jalankan file dengan perintah:
 ```bash
-python hill_cipher.py
-
+python hillcipher.py
 ```
-
-
-
-### Penggunaan sebagai Modul (Import)
-
-Anda juga bisa mengimpor fungsi-fungsi ini ke dalam file Python Anda yang lain:
-
-```python
-from hill_cipher import encrypt_hill, decrypt_hill, find_key_hill
-
-# Definisikan kunci (misal 2x2)
-kunci = [[3, 3], [2, 5]]
-teks = "HELLO"
-
-# Enkripsi
-sandi = encrypt_hill(teks, kunci)
-print("Sandi:", sandi) # Output: HIATX
-
-# Dekripsi
-asli = decrypt_hill(sandi, kunci)
-print("Asli:", asli)
-
+3. Program akan menampilkan menu berikut:
+```text
+=== HILL CIPHER ===
+1. Enkripsi
+2. Dekripsi
+3. Cari Kunci (dari Plaintext & Ciphertext)
+4. Keluar
+Pilih menu (1/2/3/4):
 ```
+4. Pilih menu yang diinginkan, lalu ikuti instruksi input yang muncul:
+   * **Enkripsi (1)** — masukkan *plaintext*, lalu ukuran matriks kunci `n`, lalu isi matriks kunci baris per baris (angka dipisahkan spasi).
+   * **Dekripsi (2)** — masukkan *ciphertext*, lalu ukuran dan isi matriks kunci (sama seperti di atas).
+   * **Cari Kunci (3)** — masukkan *plaintext* dan *ciphertext* yang saling berpasangan, lalu ukuran matriks kunci `n` yang ingin dicari.
+   * **Keluar (4)** — menutup program.
 
 ## 💻 Contoh Output Program
 
-Saat Anda menjalankan file secara langsung, program akan menampilkan pengujian dasar seperti berikut:
+Berikut contoh sesi interaktif saat menjalankan `python hillcipher.py`:
 
-```text
-=== HILL CIPHER PYTHON ===
-Kunci (K):
-[[3 3]
- [2 5]]
-Pesan Asli   : HELP
-
-[1] Hasil Enkripsi (Ciphertext) : HIAT
-[2] Hasil Dekripsi (Plaintext)  : HELP
-[3] Kunci yang ditemukan dari ('HELP' & 'HIAT'):
-[[3, 3], [2, 5]]
-
-```
+![sshillcipher.png](sshillcipher.png)
 
 ## 📐 Penjelasan Matematis Singkat
 
