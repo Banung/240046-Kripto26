@@ -47,7 +47,7 @@ Pilih menu (1/2/3):
 
 ## 💻 Contoh Output Program
 
-![sslsb.png](sslsb.png)
+![contoh.png](conntoh.png)
 
 ## 📐 Cara Kerja Program
 
