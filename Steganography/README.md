@@ -47,7 +47,7 @@ Pilih menu (1/2/3):
 
 ## 💻 Contoh Output Program
 
-![contoh.png](conntoh.png)
+![contoh.png](contoh.png)
 
 ## 📐 Cara Kerja Program
 
